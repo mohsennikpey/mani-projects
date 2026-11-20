@@ -1,0 +1,479 @@
+/* ==============================
+   Global Reset
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==============================
+   Body
+============================== */
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #f1f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ==============================
+   Main Container
+============================== */
+
+.todo-container {
+    width: 100%;
+    max-width: 500px;
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #334155;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* ==============================
+   Heading
+============================== */
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #f8fafc;
+}
+
+/* ==============================
+   Add Task Section
+============================== */
+
+.todo-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+#task-input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: #f1f5f9;
+    font-size: 15px;
+    outline: none;
+}
+
+#task-input:focus {
+    border-color: #60a5fa;
+}
+
+#task-priority {
+    padding: 12px 10px;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #f1f5f9;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Add Button */
+
+#add-task-btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#add-task-btn:hover {
+    background: #2563eb;
+}
+
+#add-task-btn:active {
+    transform: scale(0.90);
+}
+
+#add-task-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #475569;
+    transform: none;
+}
+
+/* ==============================
+   Filters
+============================== */
+
+.todo-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #94a3b8;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: #60a5fa;
+    color: #f1f5f9;
+}
+
+.filter-btn.active {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
+/* ==============================
+   Task Counter
+============================== */
+
+#task-counter {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+/* ==============================
+   Clear Completed Button
+============================== */
+
+#clear-completed-btn {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    background: #334155;
+    color: #f1f5f9;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#clear-completed-btn:hover {
+    background: #475569;
+}
+
+/* ==============================
+   Empty State
+============================== */
+
+#empty-state {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+    padding: 20px 10px;
+}
+
+/* ==============================
+   Task List
+============================== */
+
+#task-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    animation: taskFadeIn 1.2s ease;
+}
+
+.task-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 5px;
+}
+
+/* Task Text */
+.task-text {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+}
+
+.task-text:hover {
+    color: #60a5fa;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #94a3b8;
+}
+
+.task-item.completed {
+    opacity: 0.75;
+}
+
+/* Task Date */
+
+.task-date {
+    font-size: 11px;
+    color: #94a3b8;
+    white-space: normal;
+    margin-left: 0;
+}
+
+/* ==============================
+   Task Priority Badges
+============================== */
+
+.priority-badge {
+    width: fit-content;
+    padding: 3px 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.priority-high {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+
+.priority-medium {
+    background: #facc15;
+    color: #422006;
+}
+
+.priority-low {
+    background: #14532d;
+    color: #bbf7d0;
+}
+
+/* ==============================
+   Edit Task
+============================== */
+
+.edit-input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #60a5fa;
+    border-radius: 8px;
+    background: #1e293b;
+    color: #f1f5f9;
+    font-size: 14px;
+    outline: none;
+}
+
+.edit-priority {
+    width: fit-content;
+    padding: 8px 10px;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    background: #0f172a;
+    color: #f1f5f9;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* Save and Cancel */
+
+.save-btn,
+.cancel-btn {
+    padding: 9px 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.save-btn {
+    background: #16a34a;
+}
+
+.save-btn:hover {
+    background: #15803d;
+}
+
+.cancel-btn {
+    background: #64748b;
+}
+
+.cancel-btn:hover {
+    background: #475569;
+}
+
+/* Edit Button */
+
+.edit-btn {
+    padding: 9px 12px;
+    border: none;
+    border-radius: 6px;
+    background: #3b82f6;
+    color: #ffffff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+    background: #2563eb;
+}
+
+.edit-btn:active {
+    transform: scale(0.96);
+}
+
+/* ==============================
+   Delete Button
+============================== */
+
+.delete-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: #ef4444;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+/* ==============================
+   Focus Accessibility
+============================== */
+
+button:focus-visible,
+#task-input:focus-visible,
+#task-priority:focus-visible,
+.edit-priority:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 3px;
+}
+
+/* ==============================
+   Animations
+============================== */
+
+@keyframes taskFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==============================
+   Responsive Design
+============================== */
+
+@media (max-width: 480px) {
+    .todo-container {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    #add-task-btn {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .todo-container {
+        padding: 16px;
+    }
+
+    .todo-filters {
+        gap: 5px;
+    }
+
+    .filter-btn {
+        padding: 9px 5px;
+        font-size: 12px;
+    }
+
+    #task-input {
+        font-size: 14px;
+    }
+
+    #add-task-btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #task-priority {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+
+    .task-item {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .delete-btn {
+        padding: 7px 8px;
+        font-size: 12px;
+    }
+}
+
+/* ==============================
+   Reduced Motion
+============================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+

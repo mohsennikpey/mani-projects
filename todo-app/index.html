@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A simple and responsive To-Do List app to manage daily tasks.">
+
+    <title>My To-Do List</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="todo-container">
+
+        <h1>My To-Do List</h1>
+
+        <!-- Add New Task -->
+        <div class="todo-input">
+
+            <input
+                type="text"
+                id="task-input"
+                placeholder="Add a new task..."
+                aria-label="Enter a new task"
+            >
+
+            <select
+                id="task-priority"
+                aria-label="Select task priority"
+            >
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select>
+
+            <button id="add-task-btn" type="button">
+                Add
+            </button>
+
+        </div>
+
+        <!-- Task Filters -->
+        <div class="todo-filters">
+
+            <button
+                class="filter-btn active"
+                data-filter="all"
+                type="button"
+            >
+                All
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="active"
+                type="button"
+            >
+                Active
+            </button>
+
+            <button
+                class="filter-btn"
+                data-filter="completed"
+                type="button"
+            >
+                Completed
+            </button>
+
+        </div>
+
+        <!-- Task Counter -->
+        <p id="task-counter" aria-live="polite">
+            0 tasks left
+        </p>
+
+        <!-- Clear Completed Tasks -->
+        <button id="clear-completed-btn" type="button">
+            Clear Completed
+        </button>
+
+        <!-- Empty State -->
+        <p id="empty-state" aria-live="polite">
+            No tasks yet. Add your first task!
+        </p>
+
+        <!-- Task List -->
+        <ul id="task-list"></ul>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
