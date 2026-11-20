@@ -1,6 +1,6 @@
 # To-Do List App
 
-![To-Do List App Preview](todo-project-optimized.jpg)
+![To-Do List App Preview](./todo-project-optimized.jpg)
 
 A responsive task management application built with HTML, CSS, and JavaScript.
 
