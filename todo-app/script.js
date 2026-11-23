@@ -30,21 +30,38 @@ function loadTasks() {
             return [];
         }
 
-        return parsedTasks.map(function (task) {
-            return {
-                ...task,
-                priority: ["high", "medium", "low"].includes(task.priority)
-                    ? task.priority
-                    : "medium"
-            };
-        });
+        return parsedTasks
+            .filter(function (task) {
+                return task &&
+                    typeof task === "object" &&
+                    !Array.isArray(task) &&
+                    (typeof task.id === "string" ||
+                     typeof task.id === "number") &&
+                    typeof task.text === "string";
+            })
+            .map(function (task) {
+                return {
+                    ...task,
+
+                    priority: ["high", "medium", "low"].includes(task.priority)
+                        ? task.priority
+                        : "medium",
+
+                    completed: typeof task.completed === "boolean"
+                        ? task.completed
+                        : false,
+
+                    createdAt: typeof task.createdAt === "string"
+                        ? task.createdAt
+                        : ""
+                };
+            });
 
     } catch (error) {
         console.error("Could not load tasks:", error);
         return [];
     }
 }
-
 
 let tasks = loadTasks();
 let currentFilter = "all";
@@ -102,10 +119,15 @@ function addTask() {
 
     tasks.push(task);
 
-    saveTasks();
+    if (!saveTasks()) {
+        tasks.pop();
+        return;
+    }
+
     renderTasks();
 
     taskInput.value = "";
+
     addTaskBtn.disabled = true;
     taskInput.focus();
 }
@@ -116,14 +138,19 @@ function addTask() {
 // ================================
 
 clearCompletedBtn.addEventListener("click", function () {
+    const previousTasks = tasks;
+
     tasks = tasks.filter(function (task) {
         return !task.completed;
     });
 
-    saveTasks();
+    if (!saveTasks()) {
+        tasks = previousTasks;
+        return;
+    }
+
     renderTasks();
 });
-
 
 // ================================
 // Render Tasks
@@ -326,7 +353,12 @@ function renderTasks() {
     taskCounter.textContent = remainingTasks === 1
         ? "1 task left"
         : remainingTasks + " tasks left";
-}
+    const completedTasks = tasks.filter(function (task) {
+    return task.completed;
+    }).length;
+
+    clearCompletedBtn.disabled = completedTasks === 0;
+    }
 // ================================
 // Save Tasks
 // ================================
@@ -336,12 +368,15 @@ function saveTasks() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
         return true;
 
-    } catch (error) {
-        console.error("Could not save tasks:", error);
-        return false;
-    }
-}
+    } 
+    catch (error) {
+    console.error("Could not save tasks:", error);
 
+    alert("Unable to save tasks. Please check your browser storage.");
+
+    return false;
+}
+}
 
 // ================================
 // Task List Click Events
@@ -380,23 +415,32 @@ taskList.addEventListener("click", function (event) {
         }
 
         const newText = editInput.value.trim();
-        const newPriority = editPriority.value;
+        const newPriority = ["high", "medium", "low"].includes(editPriority.value)
+         ? editPriority.value
+         : "medium";
 
         if (newText === "") {
             editInput.focus();
             return;
         }
 
+        const oldText = task.text;
+        const oldPriority = task.priority;
+
         task.text = newText;
         task.priority = newPriority;
 
-        saveTasks();
+        if (!saveTasks()) {
+            task.text = oldText;
+            task.priority = oldPriority;
+            return;
+        }
 
         editingTaskId = null;
 
         renderTasks();
         return;
-    }
+        }
 
     // Cancel Editing
 
@@ -411,17 +455,23 @@ taskList.addEventListener("click", function (event) {
 
     if (event.target.classList.contains("delete-btn")) {
 
+        const previousTasks = tasks;
+
         tasks = tasks.filter(function (task) {
-            return String(task.id) !== id;
-        });
+        return String(task.id) !== id;
+    });
 
-        if (editingTaskId === id) {
-            editingTaskId = null;
-        }
+    if (!saveTasks()) {
+    tasks = previousTasks;
+    return;
+    }
 
-        saveTasks();
-        renderTasks();
-        return;
+    if (editingTaskId === id) {
+    editingTaskId = null;
+    }
+
+    renderTasks();
+    return;
     }
 
 
@@ -434,13 +484,19 @@ taskList.addEventListener("click", function (event) {
         });
 
         if (task) {
-            task.completed = !task.completed;
+    const previousStatus = task.completed;
 
-            saveTasks();
-            renderTasks();
-        }
+    task.completed = !task.completed;
+
+    if (!saveTasks()) {
+        task.completed = previousStatus;
+        return;
     }
-});
+
+    renderTasks();
+    }
+    }
+    });
 
 
 // ================================

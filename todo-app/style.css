@@ -383,8 +383,10 @@ h1 {
 ============================== */
 
 button:focus-visible,
+.task-text:focus-visible,
 #task-input:focus-visible,
 #task-priority:focus-visible,
+.edit-input:focus-visible,
 .edit-priority:focus-visible {
     outline: 2px solid #60a5fa;
     outline-offset: 3px;
@@ -475,5 +477,14 @@ button:focus-visible,
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+#clear-completed-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: #334155;
+}
+
+#clear-completed-btn:disabled:hover {
+    background: #334155;
 }
 
