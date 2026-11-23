@@ -4,8 +4,7 @@ A responsive task management application built with HTML, CSS, and JavaScript.
 
 Preview
 
-"To-Do List App Preview" (./todo-project-optimized.jpg)
-
+![To-Do List App Preview](todo-project-optimized.jpg)
 Live Demo
 
 "View Live Demo" (https://mohsennikpey.github.io/mani-projects/todo-app/)
